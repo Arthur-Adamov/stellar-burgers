@@ -9,26 +9,20 @@ import { Preloader } from '@ui';
 import { getIngredientsSelector } from '../../../src/services/slices/ingredientSlice';
 
 export const BurgerIngredients: FC = () => {
-  const { ingredients, loading, error } = useSelector(getIngredientsSelector);
+  const { ingredients } = useSelector(getIngredientsSelector);
 
-  if (loading) {
-    return <Preloader />;
-  }
+  // if (loading) {
+  //   return <Preloader />;
+  // }
 
-  if (error) {
-    return <div>Запрос завершился с ошибкой: {error}</div>;
-  }
+  // if (error) {
+  //   return <div>Запрос завершился с ошибкой: {error}</div>;
+  // }
 
   /** TODO: взять переменные из стора */
-  const buns = ingredients.filter(function (item) {
-    return item.type === 'bun';
-  });
-  const mains = ingredients.filter(function (item) {
-    return item.type === 'main';
-  });
-  const sauces = ingredients.filter(function (item) {
-    return item.type === 'sauce';
-  });
+  const buns = ingredients.filter((item) => item.type === 'bun');
+  const mains = ingredients.filter((item) => item.type === 'main');
+  const sauces = ingredients.filter((item) => item.type === 'sauce');
 
   const [currentTab, setCurrentTab] = useState<TTabMode>('bun');
   const titleBunRef = useRef<HTMLHeadingElement>(null);

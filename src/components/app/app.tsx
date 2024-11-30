@@ -13,12 +13,19 @@ import '../../index.css';
 import styles from './app.module.css';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { ProtectedRoute } from '../protected-route';
+import { useDispatch } from '../../services/store';
 
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
+import { useEffect } from 'react';
+import { getIngredients } from '../../services/slices/ingredientSlice';
 
 const App = () => {
   const location = useLocation();
   const backgroundLocation = location.state?.backgroundLocation;
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, []);
 
   return (
     <>
