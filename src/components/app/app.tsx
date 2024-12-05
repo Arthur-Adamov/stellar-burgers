@@ -17,7 +17,7 @@ import { useDispatch } from '../../services/store';
 
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { useEffect } from 'react';
-import { getIngredients } from '../../services/slices/ingredientSlice';
+import { getIngredients } from '../../services/slices/ingredientSlice/ingredientSlice';
 
 const App = () => {
   const location = useLocation();

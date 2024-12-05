@@ -5,19 +5,10 @@ import { TTabMode } from '@utils-types';
 import { BurgerIngredientsUI } from '../ui/burger-ingredients';
 import { useSelector } from 'react-redux';
 
-import { Preloader } from '@ui';
-import { getIngredientsSelector } from '../../../src/services/slices/ingredientSlice';
+import { getIngredientsSelector } from '../../services/slices/ingredientSlice/ingredientSlice';
 
 export const BurgerIngredients: FC = () => {
-  const { ingredients } = useSelector(getIngredientsSelector);
-
-  // if (loading) {
-  //   return <Preloader />;
-  // }
-
-  // if (error) {
-  //   return <div>Запрос завершился с ошибкой: {error}</div>;
-  // }
+  const ingredients = useSelector(getIngredientsSelector);
 
   /** TODO: взять переменные из стора */
   const buns = ingredients.filter((item) => item.type === 'bun');
