@@ -11,7 +11,7 @@ import {
 } from '@pages';
 import '../../index.css';
 import styles from './app.module.css';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { ProtectedRoute } from '../protected-route';
 import { useDispatch } from '../../services/store';
 
@@ -23,9 +23,14 @@ const App = () => {
   const location = useLocation();
   const backgroundLocation = location.state?.backgroundLocation;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(getIngredients());
   }, []);
+
+  const onClose = () => {
+    navigate(-1);
+  };
 
   return (
     <>
@@ -92,7 +97,7 @@ const App = () => {
           <Route
             path='/feed/:number'
             element={
-              <Modal title={''} onClose={() => {}}>
+              <Modal title={''} onClose={onClose}>
                 <OrderInfo />
               </Modal>
             }
@@ -100,7 +105,7 @@ const App = () => {
           <Route
             path='/ingredients/:id'
             element={
-              <Modal title={'Детали ингредиента'} onClose={() => {}}>
+              <Modal title={'Детали ингредиента'} onClose={onClose}>
                 <IngredientDetails />
               </Modal>
             }
@@ -108,7 +113,7 @@ const App = () => {
           <Route
             path='/profile/orders/:number'
             element={
-              <Modal title={''} onClose={() => {}}>
+              <Modal title={''} onClose={onClose}>
                 <OrderInfo />
               </Modal>
             }

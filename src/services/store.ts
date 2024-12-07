@@ -8,10 +8,14 @@ import {
 } from 'react-redux';
 import { combineReducers } from '@reduxjs/toolkit';
 import { constructorReducer } from './slices/constructorSlice/constructorSlice';
+import { userOrderReducer } from './slices/createOrderSlice/createOrderSlice';
+import { userReducer } from './slices/userSlice/userSlice';
 
 const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
-  burgerConstructor: constructorReducer
+  burgerConstructor: constructorReducer,
+  userOrder: userOrderReducer,
+  user: userReducer
 }); // Заменить на импорт настоящего редьюсера
 
 const store = configureStore({
