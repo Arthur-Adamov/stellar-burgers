@@ -1,21 +1,20 @@
 import { getOrdersApi, orderBurgerApi } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
-import { getUserOrdersSelector } from '../ordersSlice/ordersSlice';
 
-type TUserOrderState = {
+type TUserOrdersState = {
   order: TOrder | null;
   orders: TOrder[];
   isLoading: boolean;
-  error: string | undefined;
+  error: string | null | unknown;
   orderRequest: boolean;
 };
 
-export const initialState: TUserOrderState = {
+export const initialState: TUserOrdersState = {
   order: null,
   orders: [],
   isLoading: false,
-  error: undefined,
+  error: null,
   orderRequest: false
 };
 
@@ -24,13 +23,17 @@ export const sendUserOrder = createAsyncThunk(
   async (data: string[]) => orderBurgerApi(data)
 );
 
+export const getUserOrders = createAsyncThunk('order/getUserOrders', async () =>
+  getOrdersApi()
+);
+
 export const userOrderSlice = createSlice({
   name: 'userOrder',
   initialState,
   reducers: {},
   selectors: {
-    userOrderSelector: (state) => state.order,
-    userOrdersSelector: (state) => state.orders,
+    getUserOrderSelector: (state) => state.order,
+    getUserOrdersSelector: (state) => state.orders,
     orderRequestSelector: (state) => state.orderRequest
   },
   extraReducers: (builder) => {
@@ -49,10 +52,25 @@ export const userOrderSlice = createSlice({
         state.isLoading = false;
         state.order = action.payload.order;
         state.orderRequest = false;
+      })
+      .addCase(getUserOrders.pending, (state) => {
+        state.error = null;
+        state.isLoading = true;
+      })
+      .addCase(getUserOrders.rejected, (state, action) => {
+        state.error = action.error?.message;
+        state.isLoading = false;
+      })
+      .addCase(getUserOrders.fulfilled, (state, action) => {
+        state.orders = action.payload;
+        state.isLoading = false;
       });
   }
 });
 
 export const userOrderReducer = userOrderSlice.reducer;
-export const { userOrderSelector, userOrdersSelector, orderRequestSelector } =
-  userOrderSlice.selectors;
+export const {
+  getUserOrderSelector,
+  getUserOrdersSelector,
+  orderRequestSelector
+} = userOrderSlice.selectors;

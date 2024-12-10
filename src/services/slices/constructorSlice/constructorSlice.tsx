@@ -4,12 +4,12 @@ import { getIngredientsSelector } from '../ingredientSlice/ingredientSlice';
 
 type TConstructorState = {
   bun: TConstructorIngredient | null;
-  otherIngredients: Array<TConstructorIngredient>;
+  ingredients: Array<TConstructorIngredient>;
 };
 
 const initialState: TConstructorState = {
   bun: null,
-  otherIngredients: []
+  ingredients: []
 };
 
 const constructorSlice = createSlice({
@@ -21,7 +21,7 @@ const constructorSlice = createSlice({
         if (action.payload.type === 'bun') {
           state.bun = action.payload;
         } else {
-          state.otherIngredients.push(action.payload);
+          state.ingredients.push(action.payload);
         }
       },
       prepare: (ingredient: TIngredient) => {
@@ -30,36 +30,37 @@ const constructorSlice = createSlice({
       }
     },
     deleteIngredient: (state, action) => {
-      state.otherIngredients = state.otherIngredients.filter(
+      state.ingredients = state.ingredients.filter(
         (i) => i.id !== action.payload.id
       );
     },
     moveUp: (state, action) => {
       if (action.payload > 0) {
-        state.otherIngredients.splice(
+        state.ingredients.splice(
           action.payload,
           0,
-          state.otherIngredients.splice(action.payload - 1, 1)[0]
+          state.ingredients.splice(action.payload - 1, 1)[0]
         );
       }
     },
     moveDown: (state, action) => {
-      if (action.payload < state.otherIngredients.length) {
-        state.otherIngredients.splice(
+      if (action.payload < state.ingredients.length) {
+        state.ingredients.splice(
           action.payload,
           0,
-          state.otherIngredients.splice(action.payload + 1, 1)[0]
+          state.ingredients.splice(action.payload + 1, 1)[0]
         );
       }
     },
     clearBurgerConstructor: (state) => {
       state.bun = null;
-      state.otherIngredients = [];
+      state.ingredients = [];
     }
   },
   selectors: {
+    getBurger: (state) => state,
     getBun: (state) => state.bun,
-    getOtherIngredients: (state) => state.otherIngredients
+    getOtherIngredients: (state) => state.ingredients
   }
 });
 
@@ -71,4 +72,5 @@ export const {
   moveDown,
   clearBurgerConstructor
 } = constructorSlice.actions;
-export const { getBun, getOtherIngredients } = constructorSlice.selectors;
+export const { getBurger, getBun, getOtherIngredients } =
+  constructorSlice.selectors;

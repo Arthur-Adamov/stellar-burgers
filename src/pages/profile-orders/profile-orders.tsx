@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from '../../services/store';
 import {
   getUserOrders,
   getUserOrdersSelector
-} from '../../services/slices/ordersSlice/ordersSlice';
+} from '../../services/slices/userOrdersSlice/userOrdersSlice';
 
 export const ProfileOrders: FC = () => {
   /** TODO: взять переменную из стора */
@@ -15,7 +15,7 @@ export const ProfileOrders: FC = () => {
 
   useEffect(() => {
     dispatch(getUserOrders());
-  }, []);
+  }, [dispatch]);
 
   return <ProfileOrdersUI orders={orders} />;
 };

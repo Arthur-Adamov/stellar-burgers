@@ -11,8 +11,8 @@ import {
 import {
   orderRequestSelector,
   sendUserOrder,
-  userOrderSelector
-} from '../../services/slices/createOrderSlice/createOrderSlice';
+  getUserOrderSelector
+} from '../../services/slices/userOrdersSlice/userOrdersSlice';
 import { isAuthenticatedSelector } from '../../services/slices/userSlice/userSlice';
 
 export const BurgerConstructor: FC = () => {
@@ -27,7 +27,7 @@ export const BurgerConstructor: FC = () => {
 
   const orderRequest = useSelector(orderRequestSelector);
 
-  const orderModalData = useSelector(userOrderSelector);
+  const orderModalData = useSelector(getUserOrderSelector);
 
   const onOrderClick = () => {
     if (!constructorItems.bun || orderRequest) return;

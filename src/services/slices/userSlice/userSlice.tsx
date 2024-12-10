@@ -110,7 +110,7 @@ export const userSlice = createSlice({
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.loginUserRequest = false;
-        state.loginUserError = action.payload;
+        state.loginUserError = action.error.message;
         state.isAuthChecked = true;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
@@ -125,7 +125,7 @@ export const userSlice = createSlice({
       })
       .addCase(getUser.rejected, (state, action) => {
         state.loginUserRequest = false;
-        state.loginUserError = action.payload;
+        state.loginUserError = action.error.message;
         state.isAuthChecked = true;
       })
       .addCase(getUser.fulfilled, (state, action) => {
