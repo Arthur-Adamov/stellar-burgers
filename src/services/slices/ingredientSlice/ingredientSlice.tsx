@@ -3,12 +3,14 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TIngredient } from '@utils-types';
 
 type TIngredientsState = {
+  ingredient: TIngredient | null;
   ingredients: Array<TIngredient>;
   isLoading: boolean;
   error: string | undefined;
 };
 
 const initialState: TIngredientsState = {
+  ingredient: null,
   ingredients: [],
   isLoading: false,
   error: undefined

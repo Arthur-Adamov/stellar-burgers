@@ -9,7 +9,7 @@ import {
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TLoginData } from '../../../utils/burger-api';
 import { TUser } from '@utils-types';
-import { deleteCookie, setCookie } from '../../../utils/cookie';
+import { deleteCookie, getCookie, setCookie } from '../../../utils/cookie';
 
 type TUserState = {
   isAuthChecked: boolean;
@@ -18,11 +18,6 @@ type TUserState = {
   loginUserError: string | null | unknown;
   loginUserRequest: boolean;
 };
-
-// export const loginUser = createAsyncThunk(
-//   'user/loginUser',
-//   async (data: TLoginData) => await loginUserApi(data)
-// );
 
 export const loginUser = createAsyncThunk(
   'user/loginUser',
@@ -70,6 +65,19 @@ export const logoutUser = createAsyncThunk(
   }
 );
 
+// export const checkUserAuth = createAsyncThunk(
+//   'user/checkUser',
+//   (_, { dispatch }) => {
+//     if (getCookie('accessToken')) {
+//       dispatch(getUser()).finally(() => {
+//         dispatch(authChecked());
+//       });
+//     } else {
+//       dispatch(authChecked());
+//     }
+//   }
+// );
+
 const initialState: TUserState = {
   isAuthChecked: false, // флаг для статуса проверки токена пользователя
   isAuthenticated: false,
@@ -81,7 +89,11 @@ const initialState: TUserState = {
 export const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    // authChecked: (state) => {
+    //   state.isAuthChecked = true;
+    // }
+  },
   selectors: {
     dataSelector: (state) => state.data,
     isAuthCheckedSelector: (state) => state.isAuthChecked,
