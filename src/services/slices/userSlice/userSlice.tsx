@@ -6,10 +6,10 @@ import {
   TRegisterData,
   updateUserApi
 } from '@api';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TLoginData } from '../../../utils/burger-api';
 import { TUser } from '@utils-types';
-import { deleteCookie, getCookie, setCookie } from '../../../utils/cookie';
+import { deleteCookie, setCookie } from '../../../utils/cookie';
 
 type TUserState = {
   isAuthChecked: boolean;
@@ -49,34 +49,16 @@ export const updateUser = createAsyncThunk(
   async (user: TUser) => await updateUserApi(user)
 );
 
-export const logoutUser = createAsyncThunk(
-  'user/logout',
-  // (_, { dispatch }) => {
-  async () => {
-    logoutApi()
-      .then(() => {
-        localStorage.clear(); // очищаем refreshToken
-        deleteCookie('accessToken'); // очищаем accessToken
-        // dispatch(userLogout()); // удаляем пользователя из хранилища
-      })
-      .catch(() => {
-        console.log('Ошибка выполнения выхода');
-      });
-  }
-);
-
-// export const checkUserAuth = createAsyncThunk(
-//   'user/checkUser',
-//   (_, { dispatch }) => {
-//     if (getCookie('accessToken')) {
-//       dispatch(getUser()).finally(() => {
-//         dispatch(authChecked());
-//       });
-//     } else {
-//       dispatch(authChecked());
-//     }
-//   }
-// );
+export const logoutUser = createAsyncThunk('user/logout', async () => {
+  logoutApi()
+    .then(() => {
+      localStorage.clear();
+      deleteCookie('accessToken');
+    })
+    .catch(() => {
+      console.log('Ошибка выполнения выхода');
+    });
+});
 
 const initialState: TUserState = {
   isAuthChecked: false, // флаг для статуса проверки токена пользователя
@@ -89,11 +71,7 @@ const initialState: TUserState = {
 export const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {
-    // authChecked: (state) => {
-    //   state.isAuthChecked = true;
-    // }
-  },
+  reducers: {},
   selectors: {
     dataSelector: (state) => state.data,
     isAuthCheckedSelector: (state) => state.isAuthChecked,

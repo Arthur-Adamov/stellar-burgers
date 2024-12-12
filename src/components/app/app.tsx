@@ -20,7 +20,6 @@ import { useEffect } from 'react';
 import { getIngredients } from '../../services/slices/ingredientSlice/ingredientSlice';
 
 import { getUser } from '../../services/slices/userSlice/userSlice';
-import { useSelector } from 'react-redux';
 
 const App = () => {
   const location = useLocation();

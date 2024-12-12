@@ -1,9 +1,9 @@
-import { getFeedsApi } from '@api';
+import { getFeedsApi, getOrderByNumberApi } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
 
 type TOrdersState = {
-  order: TOrder | null;
+  order: TOrder[];
   orders: TOrder[];
   total: number;
   totalToday: number;
@@ -13,7 +13,7 @@ type TOrdersState = {
 };
 
 export const initialState: TOrdersState = {
-  order: null,
+  order: [],
   orders: [],
   total: 0,
   totalToday: 0,
@@ -24,17 +24,32 @@ export const initialState: TOrdersState = {
 
 export const getOrders = createAsyncThunk('order/getOrders', getFeedsApi);
 
+export const getOrder = createAsyncThunk('order/getOrder', getOrderByNumberApi);
+
 export const ordersSlice = createSlice({
   name: 'orders',
   initialState,
   reducers: {},
   selectors: {
+    getOrderSelector: (state) => state.order,
     getOrdersSelector: (state) => state.orders,
     getTotalSelector: (state) => state.total,
     getTotalTodaySelector: (state) => state.totalToday
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getOrder.pending, (state) => {
+        state.error = null;
+        state.isLoading = true;
+      })
+      .addCase(getOrder.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.isLoading = false;
+      })
+      .addCase(getOrder.fulfilled, (state, action) => {
+        state.order = action.payload.orders;
+        state.isLoading = false;
+      })
       .addCase(getOrders.pending, (state) => {
         state.error = null;
         state.isLoading = true;
@@ -52,6 +67,10 @@ export const ordersSlice = createSlice({
   }
 });
 
-export const { getOrdersSelector, getTotalSelector, getTotalTodaySelector } =
-  ordersSlice.selectors;
+export const {
+  getOrderSelector,
+  getOrdersSelector,
+  getTotalSelector,
+  getTotalTodaySelector
+} = ordersSlice.selectors;
 export const ordersReducer = ordersSlice.reducer;

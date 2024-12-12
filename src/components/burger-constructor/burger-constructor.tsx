@@ -11,7 +11,8 @@ import {
 import {
   orderRequestSelector,
   sendUserOrder,
-  getUserOrderSelector
+  getUserOrderSelector,
+  clearOrder
 } from '../../services/slices/userOrdersSlice/userOrdersSlice';
 import { isAuthenticatedSelector } from '../../services/slices/userSlice/userSlice';
 
@@ -43,6 +44,7 @@ export const BurgerConstructor: FC = () => {
   };
   const closeOrderModal = () => {
     dispatch(clearBurgerConstructor());
+    dispatch(clearOrder());
   };
 
   const price = useMemo(
@@ -54,8 +56,6 @@ export const BurgerConstructor: FC = () => {
       ),
     [constructorItems]
   );
-
-  // return null;
 
   return (
     <BurgerConstructorUI
