@@ -12,7 +12,7 @@ import { userOrderReducer } from './slices/userOrdersSlice/userOrdersSlice';
 import { userReducer } from './slices/userSlice/userSlice';
 import { ordersReducer } from './slices/ordersSlice/ordersSlice';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
   burgerConstructor: constructorReducer,
   userOrder: userOrderReducer,
@@ -20,7 +20,7 @@ const rootReducer = combineReducers({
   orders: ordersReducer
 }); // Заменить на импорт настоящего редьюсера
 
-const store = configureStore({
+export const store = configureStore({
   reducer: rootReducer,
   devTools: process.env.NODE_ENV !== 'production'
 });

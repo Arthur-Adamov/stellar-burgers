@@ -5,7 +5,7 @@ import {
   registerUserApi,
   TRegisterData,
   updateUserApi
-} from '@api';
+} from '../../../utils/burger-api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TLoginData } from '../../../utils/burger-api';
 import { TUser } from '@utils-types';
@@ -60,7 +60,7 @@ export const logoutUser = createAsyncThunk('user/logout', async () => {
     });
 });
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
   isAuthChecked: false, // флаг для статуса проверки токена пользователя
   isAuthenticated: false,
   data: null,
