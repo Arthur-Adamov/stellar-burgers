@@ -5,7 +5,7 @@ import {
   registerUserApi,
   TRegisterData,
   updateUserApi
-} from '@api';
+} from '../../../utils/burger-api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TLoginData } from '../../../utils/burger-api';
 import { TUser } from '@utils-types';
@@ -60,7 +60,7 @@ export const logoutUser = createAsyncThunk('user/logout', async () => {
     });
 });
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
   isAuthChecked: false, // флаг для статуса проверки токена пользователя
   isAuthenticated: false,
   data: null,
@@ -85,7 +85,7 @@ export const userSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loginUserRequest = false;
-        state.loginUserError = action.payload;
+        state.loginUserError = action.error?.message;
         state.isAuthChecked = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
@@ -130,7 +130,7 @@ export const userSlice = createSlice({
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.loginUserRequest = false;
-        state.loginUserError = action.payload;
+        state.loginUserError = action.error.message;
         state.isAuthChecked = true;
       })
       .addCase(updateUser.fulfilled, (state, action) => {
@@ -145,7 +145,7 @@ export const userSlice = createSlice({
       })
       .addCase(logoutUser.rejected, (state, action) => {
         state.loginUserRequest = false;
-        state.loginUserError = action.payload;
+        state.loginUserError = action.error.message;
         state.isAuthChecked = true;
       })
       .addCase(logoutUser.fulfilled, (state) => {

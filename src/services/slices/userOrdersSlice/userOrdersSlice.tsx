@@ -1,4 +1,5 @@
-import { getOrdersApi, orderBurgerApi } from '@api';
+import { getOrdersApi, orderBurgerApi } from '../../../utils/burger-api';
+
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
 
@@ -44,7 +45,7 @@ export const userOrderSlice = createSlice({
     builder
       .addCase(sendUserOrder.pending, (state) => {
         state.isLoading = true;
-        state.error = undefined;
+        state.error = null;
         state.orderRequest = true;
       })
       .addCase(sendUserOrder.rejected, (state, action) => {

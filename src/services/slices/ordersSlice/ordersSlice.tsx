@@ -1,4 +1,5 @@
-import { getFeedsApi, getOrderByNumberApi } from '@api';
+import { getFeedsApi, getOrderByNumberApi } from '../../../utils/burger-api';
+
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
 
@@ -55,7 +56,7 @@ export const ordersSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getOrders.rejected, (state, action) => {
-        state.error = action.payload;
+        state.error = action.error.message;
         state.isLoading = false;
       })
       .addCase(getOrders.fulfilled, (state, action) => {
