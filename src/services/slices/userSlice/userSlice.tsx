@@ -85,7 +85,7 @@ export const userSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loginUserRequest = false;
-        state.loginUserError = action.payload;
+        state.loginUserError = action.error?.message;
         state.isAuthChecked = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
@@ -130,7 +130,7 @@ export const userSlice = createSlice({
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.loginUserRequest = false;
-        state.loginUserError = action.payload;
+        state.loginUserError = action.error.message;
         state.isAuthChecked = true;
       })
       .addCase(updateUser.fulfilled, (state, action) => {
@@ -145,7 +145,7 @@ export const userSlice = createSlice({
       })
       .addCase(logoutUser.rejected, (state, action) => {
         state.loginUserRequest = false;
-        state.loginUserError = action.payload;
+        state.loginUserError = action.error.message;
         state.isAuthChecked = true;
       })
       .addCase(logoutUser.fulfilled, (state) => {

@@ -45,7 +45,7 @@ export const userOrderSlice = createSlice({
     builder
       .addCase(sendUserOrder.pending, (state) => {
         state.isLoading = true;
-        state.error = undefined;
+        state.error = null;
         state.orderRequest = true;
       })
       .addCase(sendUserOrder.rejected, (state, action) => {
